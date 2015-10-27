@@ -1,0 +1,49 @@
+<html>
+<head>
+
+<script type="text/javascript">
+
+var jsonVar;
+function load() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (xhttp.readyState == 4 && xhttp.status == 200) {
+      var colorsArray = JSON.parse(xhttp.responseText); var change = "";
+      for (var i = 0; i < colorsArray.length; i++) {
+        var id = 'y' + i;
+         var line = "<option onclick=\"onfoca('" + i + "')\" id='" + id + "'>" + colorsArray[i].color + " : " + colorsArray[i].value + "</option><br>";
+         change += line;
+      }
+      document.getElementById("list1").innerHTML = change;
+
+      change = "";
+      for (var i = colorsArray.length - 1; i >= 0; i--) {
+        var id = 'z' + i;
+         var line = "<option onclick=\"onfocb('" + i + "')\" id='" + id + "'>" + colorsArray[i].color + " : " + colorsArray[i].value + "</option><br>";
+         change += line;
+      }
+      document.getElementById("list2").innerHTML = change;
+
+    }
+  }
+  xhttp.open("GET", "List.json", true);
+  xhttp.send();
+}
+
+function onfoca(CurElement) {
+  document.getElementById('z' + CurElement).setAttribute('selected', 'selected');
+}
+
+function onfocb(CurElement) {
+  document.getElementById('y' + CurElement).setAttribute('selected', 'selected');
+}
+
+</script>
+</head>
+<body>
+<select id="list1" size="7"></select>
+<select id="list2" size="7"></select>
+<script type="text/javascript">load();</script>
+
+</body>
+</html>
